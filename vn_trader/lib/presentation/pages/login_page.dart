@@ -4,6 +4,7 @@ import 'package:vn_trader/presentation/bloc/login/login_bloc.dart';
 import 'package:vn_trader/presentation/widgets/login/login_form.dart';
 import 'package:vn_trader/presentation/widgets/login/social_login_section.dart';
 import 'package:vn_trader/presentation/pages/welcome_screen.dart';
+import 'package:vn_trader/presentation/pages/register_screen.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -180,7 +181,9 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        // Navigate to create account
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                        );
                       },
                       child: const Text(
                         'Create an Account',
@@ -191,6 +194,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                         ),
                       ),
                     ),
+
                   ],
                 ),
               ),
