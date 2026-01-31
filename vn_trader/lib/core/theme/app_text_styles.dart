@@ -1,5 +1,6 @@
 /// Text style constants for the application
 import 'package:flutter/material.dart';
+import 'package:vn_trader/core/constants/app_colors.dart';
 
 class AppTextStyles {
   // Display styles
@@ -95,5 +96,33 @@ class AppTextStyles {
     fontSize: 11,
     fontWeight: FontWeight.w500,
     height: 1.45,
+  );
+
+  /// Header / Title lớn
+  static const TextStyle labelHeader = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Color(0xFFE2EBE3),
+  );
+
+  /// Text chính
+  static const TextStyle labelPrimary = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      color: Color(0xFFE2EBE3)
+  );
+
+  /// Text phụ / mô tả
+ static const TextStyle labelSecondary = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+    color: Color(0xFF9B9D9C),
+  );
+
+  /// Text phụ / mô tả
+  static TextStyle labelTitleSignal = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primary,
   );
 }

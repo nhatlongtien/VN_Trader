@@ -72,4 +72,15 @@ class AppColors {
   // =======================
   // BASIC
   // =======================
+  static const Color lightGreen1 = Color(0xFF105F35);
+  static const Color lightGreen2 = Color(0xFF13B262);
+  static const Color lightGreen3 = Color(0xFF13EC7F);
+  static const Color lightGreen4 = Color(0xFF14B966);
+  static const Color lightGreen5 = Color(0xFF14BC68);
+
+  static const Color darkGreen1 = Color(0xFF15281F);
+  static const Color darkGreen2 = Color(0xFF182C22);
+  static const Color darkGreen3 = Color(0xFF193F2C);
+  static const Color darkGreen4 = Color(0xFF185336);
+
 }
