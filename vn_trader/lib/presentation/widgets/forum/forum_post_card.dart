@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
+import 'package:vn_trader/core/utils/image_helper.dart';
 import 'package:vn_trader/presentation/pages/forum_screen.dart';
 import 'package:vn_trader/presentation/widgets/forum/forum_signal_card.dart';
 
@@ -229,6 +230,14 @@ class _ForumPostCardState extends State<ForumPostCard> {
                   ),
                 ),
               ),
+            const SizedBox(height: 8,),
+            ImageHelper.loadFromAsset(
+              widget.post.authorImage,
+              width: double.infinity,
+              height: 150,
+              fit: BoxFit.cover,
+              radius: BorderRadius.circular(10)
+            ),
           ],
         );
       },

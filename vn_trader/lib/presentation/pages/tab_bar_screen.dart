@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/presentation/index.dart';
+import 'package:vn_trader/presentation/pages/signal_screen.dart';
 
 class TabBarScreen extends StatefulWidget {
   const TabBarScreen({super.key});
@@ -68,7 +69,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
           children:  [
             ForumScreen(),
             ForumScreen(),
-            ForumScreen(),
+            SignalScreen(),
             ForumScreen(),
           ],
 

@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => LoginBloc()),

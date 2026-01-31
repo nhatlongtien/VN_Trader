@@ -33,26 +33,9 @@ class _ForumScreenContentState extends State<_ForumScreenContent> {
 
   final List<ForumPost> _posts = [
     ForumPost(
-      id: '1',
-      authorName: 'Signal Bot AI',
-      authorImage: 'assets/images/placeholder.png',
-      title: 'BUY EUR/USD',
-      description: 'Vua xong·Auto-Signal',
-      timeAgo: '5 gio trudc',
-      isPremium: true,
-      isActive: true,
-      upvotes: 23,
-      comments: 412,
-      views: 'XEM CHI TIẾT',
-      takeProfit: '1.09100',
-      stopLoss: '1.08200',
-      tags: ['#TradingMindset', '#Psychology'],
-      isFree: false,
-    ),
-    ForumPost(
       id: '2',
       authorName: 'Thanh Trader',
-      authorImage: 'assets/images/placeholder.png',
+      authorImage: 'assets/images/login/forum_example_post.png',
       title:
           'Moi nguoi thuong lam gì khi gap chuoi thua 5-6 lenh lien tiep? Minh dang cam thay kha ap luc và muon bo cuφc...',
       description: 'Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi',
@@ -68,7 +51,7 @@ class _ForumScreenContentState extends State<_ForumScreenContent> {
     ForumPost(
       id: '3',
       authorName: 'Nguyen Trading',
-      authorImage: 'assets/images/placeholder.png',
+      authorImage: 'assets/images/login/forum_example_post.png',
       title: 'Gold SMC Strategy cho phiên London hôm nay',
       description:
           'Cau truc thitruong tren H1 dang cuc ky bearish.\nHay chu y vung FVG chua duoc láp day truoc...',
@@ -80,6 +63,38 @@ class _ForumScreenContentState extends State<_ForumScreenContent> {
       views: 'XEM CHI TIẾT',
       tags: ['#XAUUSD', '#GOLD', '#SMC'],
       isFree: false,
+    ),
+    ForumPost(
+      id: '2',
+      authorName: 'Thanh Trader',
+      authorImage: 'assets/images/login/forum_example_post.png',
+      title:
+      'Moi nguoi thuong lam gì khi gap chuoi thua 5-6 lenh lien tiep? Minh dang cam thay kha ap luc và muon bo cuφc...',
+      description: 'Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi',
+      timeAgo: '5 gio trudc',
+      isPremium: false,
+      isActive: false,
+      upvotes: 156,
+      comments: 89,
+      views: 'XEM CHI TIẾT',
+      tags: ['#TradingMindset', '#Psychology'],
+      isFree: true,
+    ),
+    ForumPost(
+      id: '2',
+      authorName: 'Thanh Trader',
+      authorImage: 'assets/images/login/forum_example_post.png',
+      title:
+      'Moi nguoi thuong lam gì khi gap chuoi thua 5-6 lenh lien tiep? Minh dang cam thay kha ap luc và muon bo cuφc...',
+      description: 'Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi',
+      timeAgo: '5 gio trudc',
+      isPremium: false,
+      isActive: false,
+      upvotes: 156,
+      comments: 89,
+      views: 'XEM CHI TIẾT',
+      tags: ['#TradingMindset', '#Psychology'],
+      isFree: true,
     ),
   ];
 
