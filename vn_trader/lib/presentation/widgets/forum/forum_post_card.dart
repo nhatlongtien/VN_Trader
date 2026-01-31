@@ -3,7 +3,7 @@ import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/presentation/pages/forum_screen.dart';
 import 'package:vn_trader/presentation/widgets/forum/forum_signal_card.dart';
 
-class ForumPostCard extends StatelessWidget {
+class ForumPostCard extends StatefulWidget {
   final ForumPost post;
   final VoidCallback onTap;
 
@@ -14,15 +14,22 @@ class ForumPostCard extends StatelessWidget {
   });
 
   @override
+  State<ForumPostCard> createState() => _ForumPostCardState();
+}
+
+class _ForumPostCardState extends State<ForumPostCard> {
+  bool _isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     // If it's a signal post with trading info
-    if (post.takeProfit != null && post.stopLoss != null) {
-      return ForumSignalCard(post: post, onTap: onTap);
+    if (widget.post.takeProfit != null && widget.post.stopLoss != null) {
+      return ForumSignalCard(post: widget.post, onTap: widget.onTap);
     }
 
     // Regular post card
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
@@ -66,7 +73,7 @@ class ForumPostCard extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                post.authorName,
+                                widget.post.authorName,
                                 style: const TextStyle(
                                   color: AppColors.textPrimary,
                                   fontSize: 13,
@@ -80,9 +87,9 @@ class ForumPostCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          post.timeAgo,
+                          widget.post.timeAgo,
                           style: TextStyle(
-                            color: AppColors.textSecondary.withOpacity(0.6),
+                            color: AppColors.textSecondary.withValues(alpha: 0.6),
                             fontSize: 11,
                           ),
                         ),
@@ -106,23 +113,14 @@ class ForumPostCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    post.description,
-                    style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 12,
-                      height: 1.3,
-                    ),
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  _buildExpandableText(),
                   const SizedBox(height: 12),
                   
                   // Tags
                   Wrap(
                     spacing: 6,
                     runSpacing: 6,
-                    children: post.tags
+                    children: widget.post.tags
                         .map((tag) => Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6,
@@ -159,10 +157,10 @@ class ForumPostCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildStat(Icons.thumb_up_outlined, post.upvotes.toString()),
+                  _buildStat(Icons.thumb_up_outlined, widget.post.upvotes.toString()),
                   _buildStat(
                     Icons.message_outlined,
-                    post.comments.toString(),
+                    widget.post.comments.toString(),
                   ),
                   Icon(
                     Icons.share,
@@ -177,6 +175,66 @@ class ForumPostCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildExpandableText() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Tính toán số dòng thực tế khi hiển thị đầy đủ
+        final fullTextPainter = TextPainter(
+          text: TextSpan(
+            text: widget.post.description,
+            style: TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 12,
+              height: 1.3,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        );
+        fullTextPainter.layout(maxWidth: constraints.maxWidth);
+
+        // Tính số dòng
+        final lines = fullTextPainter.computeLineMetrics().length;
+        final hasMoreThan4Lines = lines > 4;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.post.description,
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 12,
+                height: 1.3,
+              ),
+              maxLines: _isExpanded ? null : 4,
+              overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+            ),
+            if (hasMoreThan4Lines)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                    });
+                  },
+                  child: Text(
+                    _isExpanded ? 'Ẩn bớt' : 'Xem thêm',
+                    style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
 
   Widget _buildStat(IconData icon, String count) {
     return Row(

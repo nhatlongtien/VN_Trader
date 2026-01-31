@@ -55,7 +55,7 @@ class _ForumScreenContentState extends State<_ForumScreenContent> {
       authorImage: 'assets/images/placeholder.png',
       title:
           'Moi nguoi thuong lam gì khi gap chuoi thua 5-6 lenh lien tiep? Minh dang cam thay kha ap luc và muon bo cuφc...',
-      description: 'Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi',
+      description: 'Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi Thao luân ve tâm ly giao dich khi lo chuoi',
       timeAgo: '5 gio trudc',
       isPremium: false,
       isActive: false,

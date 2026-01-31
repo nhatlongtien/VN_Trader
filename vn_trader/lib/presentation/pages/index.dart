@@ -4,3 +4,4 @@ export 'welcome_screen.dart';
 export 'forum_screen.dart';
 export 'login_page.dart';
 export 'register_screen.dart';
+export 'tab_bar_screen.dart';

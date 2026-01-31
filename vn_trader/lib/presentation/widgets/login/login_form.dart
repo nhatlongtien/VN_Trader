@@ -78,18 +78,18 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 10,
-                  vertical: 10,
+                  vertical: 16,
                 ),
               ),
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFFDCDCDB),
               ),
             ),
           ],
         ),
-        const SizedBox(height: 50),
+        const SizedBox(height: 24),
         // Password Field
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 10,
-                  vertical: 10,
+                  vertical: 16,
                 ),
                 suffixIcon: Padding(
                   padding: const EdgeInsets.only(right: 12),
@@ -162,7 +162,7 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
               style: const TextStyle(
-                fontSize: 24,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Color(0xFFDCDCDB),
               ),

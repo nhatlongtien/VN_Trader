@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_trader/presentation/bloc/login/login_bloc.dart';
+import 'package:vn_trader/presentation/index.dart';
 import 'package:vn_trader/presentation/pages/forum_screen.dart';
 import 'package:vn_trader/presentation/widgets/login/login_form.dart';
 import 'package:vn_trader/presentation/widgets/login/social_login_section.dart';
@@ -48,7 +49,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
         if (state.status == LoginStatus.success) {
           Navigator.of(context).pushReplacement(
             // MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-            MaterialPageRoute(builder: (context) => const ForumScreen()),
+            MaterialPageRoute(builder: (context) => TabBarScreen()),
           );
         }
       },
