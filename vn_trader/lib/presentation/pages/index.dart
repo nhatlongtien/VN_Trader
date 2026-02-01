@@ -8,3 +8,4 @@ export 'tab_bar_screen.dart';
 export 'profile_screen.dart';
 export 'payment_history_screen.dart';
 export 'macro_analytic_screen.dart';
+export 'academy_screen.dart';

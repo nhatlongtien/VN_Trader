@@ -76,7 +76,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
           children: [
             const ForumScreen(),
             const MacroAnalyticScreen(),
-            const MacroAnalyticScreen(),
+            const AcademyScreen(),
             const SignalScreen(),
             const ProfileScreen()
           ],
@@ -95,9 +95,9 @@ class _TabBarScreenState extends State<TabBarScreen> {
             children: [
               _buildNavItem(0, 'Forum', 'assets/images/login/forum_ic.png', 'assets/images/login/forum_selected_ic.png'),
               _buildNavItem(1, 'Macro', 'assets/images/login/academy_ic.png', 'assets/images/login/academy_selected_ic.png'),
-              _buildNavItem(1, 'Education', 'assets/images/login/academy_ic.png', 'assets/images/login/academy_selected_ic.png'),
-              _buildNavItem(2, 'Signal', 'assets/images/login/signal_ic.png', 'assets/images/login/signal_selected_ic.png'),
-              _buildNavItem(3, 'Profile', 'assets/images/login/profile_ic.png', 'assets/images/login/profile_selected_ic.png'),
+              _buildNavItem(2, 'Education', 'assets/images/login/academy_ic.png', 'assets/images/login/academy_selected_ic.png'),
+              _buildNavItem(3, 'Signal', 'assets/images/login/signal_ic.png', 'assets/images/login/signal_selected_ic.png'),
+              _buildNavItem(4, 'Profile', 'assets/images/login/profile_ic.png', 'assets/images/login/profile_selected_ic.png'),
             ],
           ),
         ),
