@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/presentation/index.dart';
+import 'package:vn_trader/presentation/pages/macro_analytic_screen.dart';
 import 'package:vn_trader/presentation/pages/signal_screen.dart';
 
 class TabBarScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
             label,
             style: TextStyle(
               color: isSelected ? AppColors.primary : AppColors.textSecondary,
-              fontSize: 12,
+              fontSize: 10,
               fontWeight: isSelected ? FontWeight.w400 : FontWeight.normal,
             ),
           ),
@@ -74,7 +75,8 @@ class _TabBarScreenState extends State<TabBarScreen> {
           controller: _pageController,
           children: [
             const ForumScreen(),
-            const ForumScreen(),
+            const MacroAnalyticScreen(),
+            const MacroAnalyticScreen(),
             const SignalScreen(),
             const ProfileScreen()
           ],
@@ -92,6 +94,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildNavItem(0, 'Forum', 'assets/images/login/forum_ic.png', 'assets/images/login/forum_selected_ic.png'),
+              _buildNavItem(1, 'Macro', 'assets/images/login/academy_ic.png', 'assets/images/login/academy_selected_ic.png'),
               _buildNavItem(1, 'Education', 'assets/images/login/academy_ic.png', 'assets/images/login/academy_selected_ic.png'),
               _buildNavItem(2, 'Signal', 'assets/images/login/signal_ic.png', 'assets/images/login/signal_selected_ic.png'),
               _buildNavItem(3, 'Profile', 'assets/images/login/profile_ic.png', 'assets/images/login/profile_selected_ic.png'),

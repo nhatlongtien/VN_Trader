@@ -22,7 +22,7 @@ class _SignalScreenState extends State<SignalScreen> {
     'Stock'
   ];
 
-  late List<SignalPost> _post = [
+  late final List<SignalPost> _post = [
     SignalPost(
       id: '1',
       authorName: 'Signal Bot AI',

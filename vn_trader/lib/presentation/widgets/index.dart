@@ -9,3 +9,5 @@ export 'forum/forum_signal_card.dart';
 export 'signal/signal_card.dart';
 export 'signal/signal_category_filter.dart';
 export 'signal/signal_header.dart';
+export 'macro_analytic/macro_category_filter.dart';
+export 'macro_analytic/macro_post_card.dart';
