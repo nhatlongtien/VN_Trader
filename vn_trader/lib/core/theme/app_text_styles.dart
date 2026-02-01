@@ -43,7 +43,7 @@ class AppTextStyles {
 
   // Title styles
   static const TextStyle titleLarge = TextStyle(
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: FontWeight.w500,
     height: 1.27,
   );
@@ -88,7 +88,7 @@ class AppTextStyles {
 
   static const TextStyle labelMedium = TextStyle(
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     height: 1.33,
   );
 

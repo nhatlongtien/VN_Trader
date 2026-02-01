@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vn_trader/presentation/bloc/login/login_bloc.dart';
 import 'package:vn_trader/presentation/index.dart';
 import 'package:vn_trader/presentation/pages/forum_screen.dart';
@@ -47,10 +48,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status == LoginStatus.success) {
-          Navigator.of(context).pushReplacement(
-            // MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-            MaterialPageRoute(builder: (context) => TabBarScreen()),
-          );
+          context.go('/tab');
         }
       },
       child: Scaffold(
@@ -184,9 +182,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                        );
+                        context.push('/register');
                       },
                       child: const Text(
                         'Create an Account',

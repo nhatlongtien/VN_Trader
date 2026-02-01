@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/presentation/index.dart';
 import 'package:vn_trader/presentation/pages/signal_screen.dart';
@@ -19,8 +20,13 @@ class _TabBarScreenState extends State<TabBarScreen> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   Widget _buildNavItem(int index, String label, String icon, String selectedIcon) {
@@ -66,11 +72,11 @@ class _TabBarScreenState extends State<TabBarScreen> {
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
-          children:  [
-            ForumScreen(),
-            ForumScreen(),
-            SignalScreen(),
-            ForumScreen(),
+          children: [
+            const ForumScreen(),
+            const ForumScreen(),
+            const SignalScreen(),
+            const ProfileScreen()
           ],
 
         ),
