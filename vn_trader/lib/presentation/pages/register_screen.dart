@@ -1,19 +1,32 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
+import 'package:vn_trader/presentation/bloc/register/register_bloc.dart';
+import 'package:vn_trader/presentation/bloc/register/register_event.dart';
+import 'package:vn_trader/presentation/bloc/register/register_state.dart';
 
-import '../widgets/login/social_login_section.dart';
 
-
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => RegisterBloc(),
+      child: const _RegisterScreenContent(),
+    );
+  }
 }
 
+class _RegisterScreenContent extends StatefulWidget {
+  const _RegisterScreenContent();
 
-class _RegisterScreenState extends State<RegisterScreen> {
+  @override
+  State<_RegisterScreenContent> createState() => _RegisterScreenContentState();
+}
+
+class _RegisterScreenContentState extends State<_RegisterScreenContent> {
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -33,7 +46,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener: (context, state) {
+        if (state.isSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registration successful!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.of(context).pop();
+        } else if (state.isFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage ?? 'Registration failed'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -70,6 +102,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               hint: 'Enter your full name',
               keyboardType: TextInputType.name,
               obscure: false,
+              onChanged: (value) {
+                context.read<RegisterBloc>().add(RegisterFullNameChanged(value));
+              },
             ),
             const SizedBox(height: 20),
             _buildTextField(
@@ -78,6 +113,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               hint: 'example@email.com',
               keyboardType: TextInputType.emailAddress,
               obscure: false,
+              onChanged: (value) {
+                context.read<RegisterBloc>().add(RegisterEmailChanged(value));
+              },
             ),
             const SizedBox(height: 20),
             _buildTextField(
@@ -87,6 +125,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               keyboardType: TextInputType.visiblePassword,
               obscure: _obscurePassword,
               onToggleObscure: () => setState(() => _obscurePassword = !_obscurePassword),
+              onChanged: (value) {
+                context.read<RegisterBloc>().add(RegisterPasswordChanged(value));
+              },
             ),
             const SizedBox(height: 20),
             _buildTextField(
@@ -96,6 +137,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               keyboardType: TextInputType.visiblePassword,
               obscure: _obscureConfirmPassword,
               onToggleObscure: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+              onChanged: (value) {
+                context.read<RegisterBloc>().add(RegisterConfirmPasswordChanged(value));
+              },
             ),
             const SizedBox(height: 24),
             Row(
@@ -103,7 +147,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Checkbox(
                   value: _agreed,
-                  onChanged: (v) => setState(() => _agreed = v ?? false),
+                  onChanged: (v) {
+                    setState(() => _agreed = v ?? false);
+                    context.read<RegisterBloc>().add(RegisterTermsToggled(v ?? false));
+                  },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                 ),
                 Expanded(
@@ -137,22 +184,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ],
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: () {/* TODO: Register logic */},
-
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  backgroundColor: AppColors.primary
-                ),
-                child: const Text(
-                  'Register Now',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.backgroundDark),
-                ),
-              ),
+            BlocBuilder<RegisterBloc, RegisterState>(
+              builder: (context, state) {
+                return SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: state.isSubmitting
+                        ? null
+                        : () {
+                            context.read<RegisterBloc>().add(RegisterSubmitted());
+                          },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      backgroundColor: AppColors.primary,
+                      disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.5),
+                    ),
+                    child: state.isSubmitting
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: AppColors.backgroundDark,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text(
+                            'Register Now',
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.backgroundDark),
+                          ),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 20),
             Row(
@@ -181,6 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ],
         ),
       ),
+      ),
     );
   }
 
@@ -191,6 +256,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     required TextInputType keyboardType,
     required bool obscure,
     VoidCallback? onToggleObscure,
+    Function(String)? onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,6 +270,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           controller: controller,
           obscureText: obscure,
           keyboardType: keyboardType,
+          onChanged: onChanged,
+          style: TextStyle(color: AppColors.white, fontSize: 14),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: AppColors.textHint, fontSize: 13),

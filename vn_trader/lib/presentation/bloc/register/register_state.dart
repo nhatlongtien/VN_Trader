@@ -33,6 +33,7 @@ class RegisterState extends Equatable {
     bool? isSuccess,
     bool? isFailure,
     String? errorMessage,
+    bool clearError = false,
   }) {
     return RegisterState(
       fullName: fullName ?? this.fullName,
@@ -43,7 +44,7 @@ class RegisterState extends Equatable {
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
-      errorMessage: errorMessage,
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
 
