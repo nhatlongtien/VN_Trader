@@ -42,3 +42,6 @@ class RegisterTermsToggled extends RegisterEvent {
 }
 
 class RegisterSubmitted extends RegisterEvent {}
+
+class RegisterPopupShown extends RegisterEvent {}
+

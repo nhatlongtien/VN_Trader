@@ -64,13 +64,14 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Logo
+                    const SizedBox(height: 32,),
                     Row(
                       children: [
                         Spacer(),
                         const Text(
                           'Vietnam Trader Community',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFFD5D5D4),
                           ),
@@ -146,16 +147,6 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                 ),
               ),
               const SizedBox(height: 45),
-              // Social Login Section
-              SocialLoginSection(
-                onGooglePressed: () {
-                  context.read<LoginBloc>().add(const LoginWithGooglePressed());
-                },
-                onApplePressed: () {
-                  context.read<LoginBloc>().add(const LoginWithApplePressed());
-                },
-              ),
-              const SizedBox(height: 44),
               // Create Account Section
               Container(
                 width: double.infinity,
@@ -193,6 +184,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 32),
 
                   ],
                 ),

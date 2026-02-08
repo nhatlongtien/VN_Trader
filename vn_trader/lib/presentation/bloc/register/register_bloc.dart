@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vn_trader/data/repositories/register_account_repository.dart';
+import 'package:vn_trader/domain/repositories/register_account_repository.dart';
 import 'register_event.dart';
 import 'register_state.dart';
 
@@ -54,6 +54,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         isSubmitting: true,
         isFailure: false,
         isSuccess: false,
+        showPopup: false,
         clearError: true,
       ));
 
@@ -87,22 +88,36 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       }
 
       try {
-        // Call repository to register user
+        // Call repository to register user (handles both auth and insert)
         await _repository.registerWithEmail(
           state.email,
           state.password,
           state.fullName,
         );
 
-        emit(state.copyWith(isSubmitting: false, isSuccess: true));
+        // If we reach here, both registration and insert were successful
+        emit(state.copyWith(
+          isSubmitting: false,
+          isSuccess: true,
+          registerSuccess: true,
+          insertUserSuccess: true,
+          showPopup: true,
+        ));
 
       } catch (e) {
+        // Either registration or insert failed
         emit(state.copyWith(
           isSubmitting: false,
           isFailure: true,
+          registerSuccess: false,
+          insertUserSuccess: false,
+          showPopup: true,
           errorMessage: e.toString().replaceAll('Exception: ', ''),
         ));
       }
+    });
+    on<RegisterPopupShown>((event, emit) {
+      emit(state.copyWith(showPopup: false));
     });
   }
 }

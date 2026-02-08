@@ -5,6 +5,7 @@ import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/presentation/bloc/register/register_bloc.dart';
 import 'package:vn_trader/presentation/bloc/register/register_event.dart';
 import 'package:vn_trader/presentation/bloc/register/register_state.dart';
+import 'package:vn_trader/presentation/widgets/result_popup.dart';
 
 
 class RegisterScreen extends StatelessWidget {
@@ -48,21 +49,39 @@ class _RegisterScreenContentState extends State<_RegisterScreenContent> {
   Widget build(BuildContext context) {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        if (state.isSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration successful!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-          Navigator.of(context).pop();
-        } else if (state.isFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage ?? 'Registration failed'),
-              backgroundColor: Colors.red,
-            ),
-          );
+        // Only show popup once when showPopup is true
+        if (state.showPopup) {
+          // Mark popup as shown
+          context.read<RegisterBloc>().add(RegisterPopupShown());
+
+          // Check if both register and insert were successful
+          if (state.registerSuccess && state.insertUserSuccess) {
+            // SUCCESS CASE: Show success popup
+            ResultPopup.showSuccess(
+              context: context,
+              title: 'Tài khoản đã sẵn sàng!',
+              message: 'Chào mừng bạn đến với cộng đồng Trader Việt Nam. Hãy bắt đầu hành trình giao dịch của bạn ngay bây giờ.',
+              buttonText: 'Bắt đầu ngay',
+              onConfirm: () {
+                // Close popup
+                Navigator.of(context).pop();
+                // Navigate to login screen
+                Navigator.of(context).pop();
+              },
+            );
+          } else {
+            // ERROR CASE: Show error popup
+            ResultPopup.showError(
+              context: context,
+              title: 'Đăng ký thất bại',
+              message: state.errorMessage ?? 'Đã xảy ra lỗi trong quá trình tạo tài khoản. Vui lòng thử lại.',
+              buttonText: 'Thử lại',
+              onConfirm: () {
+                // Close popup and stay on registration screen
+                Navigator.of(context).pop();
+              },
+            );
+          }
         }
       },
       child: Scaffold(
