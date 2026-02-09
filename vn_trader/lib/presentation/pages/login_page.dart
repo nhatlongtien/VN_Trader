@@ -3,11 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vn_trader/presentation/bloc/login/login_bloc.dart';
 import 'package:vn_trader/presentation/index.dart';
-import 'package:vn_trader/presentation/pages/forum_screen.dart';
 import 'package:vn_trader/presentation/widgets/login/login_form.dart';
-import 'package:vn_trader/presentation/widgets/login/social_login_section.dart';
-import 'package:vn_trader/presentation/pages/welcome_screen.dart';
-import 'package:vn_trader/presentation/pages/register_screen.dart';
+import 'package:vn_trader/presentation/widgets/result_popup.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -47,13 +44,40 @@ class _LoginPageContentState extends State<_LoginPageContent> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
+        if (state.status == LoginStatus.validationError) {
+          ResultPopup.showError(
+            context: context,
+            title: "Thông báo",
+            message: "${state.errorMessage}",
+            buttonText: "Đóng",
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        }
         if (state.status == LoginStatus.success) {
           context.go('/tab');
         }
+        if (state.status == LoginStatus.failure) {
+          ResultPopup.showError(
+            context: context,
+            title: "Thông báo",
+            message: "${state.errorMessage}",
+            buttonText: "Đóng",
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        }
       },
-      child: Scaffold(
-        backgroundColor: const Color(0xFF122017),
-        body: SingleChildScrollView(
+      child: GestureDetector(
+        onTap: () {
+          // Unfocus textfield and hide keyboard when tapping anywhere
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0xFF122017),
+          body: SingleChildScrollView(
           child: Column(
             children: [
               // Header Section
@@ -121,6 +145,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                     context.read<LoginBloc>().add(LoginPasswordChanged(password));
                   },
                   onLoginPressed: () {
+                    FocusScope.of(context).unfocus();
                     context.read<LoginBloc>().add(const LoginSubmitted());
                   },
                 ),
@@ -191,6 +216,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

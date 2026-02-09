@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:vn_trader/domain/repositories/login_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final LoginRepository _repository = LoginRepository();
   LoginBloc() : super(const LoginInitial()) {
     on<LoginEmailChanged>(_onEmailChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginSubmitted>(_onLoginSubmitted);
-    on<LoginWithGooglePressed>(_onLoginWithGoogle);
-    on<LoginWithApplePressed>(_onLoginWithApple);
     on<LoginReset>(_onLoginReset);
   }
 
@@ -44,10 +44,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
-    if (!state.isFormValid) {
+    if (!state.isEmailValid) {
       emit(state.copyWith(
-        status: LoginStatus.failure,
-        errorMessage: 'Please enter valid email and password',
+        status: LoginStatus.validationError,
+        errorMessage: 'Please enter a valid email',
+      ));
+      return;
+    }
+    if (!state.isPasswordValid) {
+      emit(state.copyWith(
+        status: LoginStatus.validationError,
+        errorMessage: 'Please enter a valid password',
       ));
       return;
     }
@@ -56,51 +63,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       // TODO: Implement actual login logic with repository
-      await Future.delayed(const Duration(seconds: 2));
-      
-      emit(state.copyWith(
-        status: LoginStatus.success,
-        errorMessage: null,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        status: LoginStatus.failure,
-        errorMessage: e.toString(),
-      ));
-    }
-  }
-
-  Future<void> _onLoginWithGoogle(
-    LoginWithGooglePressed event,
-    Emitter<LoginState> emit,
-  ) async {
-    emit(state.copyWith(status: LoginStatus.loading));
-
-    try {
-      // TODO: Implement Google login logic
-      await Future.delayed(const Duration(seconds: 2));
-      
-      emit(state.copyWith(
-        status: LoginStatus.success,
-        errorMessage: null,
-      ));
-    } catch (e) {
-      emit(state.copyWith(
-        status: LoginStatus.failure,
-        errorMessage: e.toString(),
-      ));
-    }
-  }
-
-  Future<void> _onLoginWithApple(
-    LoginWithApplePressed event,
-    Emitter<LoginState> emit,
-  ) async {
-    emit(state.copyWith(status: LoginStatus.loading));
-
-    try {
-      // TODO: Implement Apple login logic
-      await Future.delayed(const Duration(seconds: 2));
+      final response = await _repository.loginWithEmailPassword(
+        email: state.email,
+        password: state.password,
+      );
       
       emit(state.copyWith(
         status: LoginStatus.success,
@@ -126,13 +92,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (email.isEmpty) return false;
     const emailRegex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
     final regex = RegExp(emailRegex);
-    return regex.hasMatch(email) || _isValidUsername(email);
-  }
-
-  /// Validate username
-  bool _isValidUsername(String username) {
-    if (username.isEmpty) return false;
-    return username.length >= 3;
+    return regex.hasMatch(email);
   }
 
   /// Validate password

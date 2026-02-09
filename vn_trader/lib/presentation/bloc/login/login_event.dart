@@ -29,14 +29,6 @@ class LoginSubmitted extends LoginEvent {
   const LoginSubmitted();
 }
 
-class LoginWithGooglePressed extends LoginEvent {
-  const LoginWithGooglePressed();
-}
-
-class LoginWithApplePressed extends LoginEvent {
-  const LoginWithApplePressed();
-}
-
 class LoginReset extends LoginEvent {
   const LoginReset();
 }
