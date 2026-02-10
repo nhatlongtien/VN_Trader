@@ -23,6 +23,10 @@ class ProfileSupportCenterPressed extends ProfileEvent {
   const ProfileSupportCenterPressed();
 }
 
+class ProfileAdminPanelPressed extends ProfileEvent {
+  const ProfileAdminPanelPressed();
+}
+
 class ProfileLogoutPressed extends ProfileEvent {
   const ProfileLogoutPressed();
 }

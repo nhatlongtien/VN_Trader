@@ -10,6 +10,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileSavedPostsPressed>(_onSavedPostsPressed);
     on<ProfileFollowedSignalsPressed>(_onFollowedSignalsPressed);
     on<ProfileSupportCenterPressed>(_onSupportCenterPressed);
+    on<ProfileAdminPanelPressed>(_onAdminPanelPressed);
     on<ProfileLogoutPressed>(_onLogoutPressed);
   }
 
@@ -39,6 +40,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     _emitAction(ProfileAction.supportCenter, emit);
+  }
+
+  Future<void> _onAdminPanelPressed(
+    ProfileAdminPanelPressed event,
+    Emitter<ProfileState> emit,
+  ) async {
+    _emitAction(ProfileAction.adminPanel, emit);
   }
 
   Future<void> _onLogoutPressed(

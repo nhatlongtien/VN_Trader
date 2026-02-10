@@ -37,5 +37,9 @@ final GoRouter appRouter = GoRouter(
         child: const MacroAnalyticScreen(),
       ),
     ),
+    GoRoute(
+      path: '/admin-dashboard',
+      builder: (context, state) => const AdminDashboard(),
+    ),
   ],
 );

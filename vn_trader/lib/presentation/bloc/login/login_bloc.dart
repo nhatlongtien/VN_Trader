@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:vn_trader/core/services/storage_service.dart';
 import 'package:vn_trader/domain/repositories/login_repository.dart';
 
 part 'login_event.dart';
@@ -67,6 +68,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: state.email,
         password: state.password,
       );
+
+      if (response.user != null) {
+        final profile = await _repository.getUserProfile(response.user!.id);
+        if (profile == null) {
+          throw Exception('Failed to fetch user profile');
+        } else {
+          // Save profile to SharedPreferences
+          final saved = await StorageService.saveProfile(profile.toJson());
+          if (!saved) {
+            throw Exception('Failed to save user profile locally');
+          }
+        }
+      }
       
       emit(state.copyWith(
         status: LoginStatus.success,

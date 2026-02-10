@@ -6,6 +6,7 @@ enum ProfileAction {
   savedPosts,
   followedSignals,
   supportCenter,
+  adminPanel,
   logout,
 }
 

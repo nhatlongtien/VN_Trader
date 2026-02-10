@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vn_trader/core/theme/app_text_styles.dart';
+import 'package:vn_trader/data/index.dart';
 import 'package:vn_trader/presentation/bloc/profile/profile_bloc.dart';
 import 'package:vn_trader/presentation/widgets/profile/action_tile.dart';
 
 class ActivitySection extends StatelessWidget {
-  const ActivitySection({super.key});
+  final bool isAdmin;
+  const ActivitySection({super.key, required this.isAdmin});
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,15 @@ class ActivitySection extends StatelessWidget {
           onTap: () =>
               context.read<ProfileBloc>().add(const ProfileSupportCenterPressed()),
         ),
+        if (isAdmin) ...[
+          const SizedBox(height: 10),
+          ActionTile(
+            icon: Icons.admin_panel_settings_outlined,
+            title: 'Quản trị viên',
+            onTap: () =>
+                context.read<ProfileBloc>().add(const ProfileAdminPanelPressed()),
+          ),
+        ],
         const SizedBox(height: 10),
         ActionTile(
           icon: Icons.logout_rounded,

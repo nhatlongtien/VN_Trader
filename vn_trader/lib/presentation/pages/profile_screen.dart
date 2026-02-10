@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vn_trader/core/constants/app_colors.dart';
 import 'package:vn_trader/core/theme/app_text_styles.dart';
+import 'package:vn_trader/data/index.dart';
 import 'package:vn_trader/presentation/bloc/profile/profile_bloc.dart';
 import 'package:vn_trader/presentation/widgets/profile/activity_section.dart';
 import 'package:vn_trader/presentation/widgets/profile/membership_card.dart';
 import 'package:vn_trader/presentation/widgets/profile/profile_header.dart';
 import 'package:vn_trader/presentation/widgets/profile/stats_card.dart';
+
+import '../../core/services/storage_service.dart';
 
 class ProfileScreen extends StatefulWidget {
 	const ProfileScreen({super.key});
@@ -17,6 +20,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+	ProfileModel? userProfile;
+	@override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    userProfile = await StorageService.getProfile();
+		setState(() {
+
+		});
+  }
+
 	@override
 	Widget build(BuildContext context) {
 		return BlocProvider(
@@ -27,6 +44,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 					switch (state.lastAction) {
 						case ProfileAction.paymentHistory:
 							context.push('/payment-history');
+							break;
+						case ProfileAction.adminPanel:
+							context.push('/admin-dashboard');
 							break;
 						default:
 							break;
@@ -58,14 +78,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 							padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
 							child: Column(
 								crossAxisAlignment: CrossAxisAlignment.start,
-								children: const [
-									ProfileHeader(),
-									SizedBox(height: 18),
-									StatsCard(),
-									SizedBox(height: 18),
-									MembershipCard(),
-									SizedBox(height: 22),
-									ActivitySection(),
+								children: [
+									const ProfileHeader(),
+									const SizedBox(height: 18),
+									const StatsCard(),
+									const SizedBox(height: 18),
+									const MembershipCard(),
+									const SizedBox(height: 22),
+									ActivitySection(isAdmin: userProfile?.isAdmin ?? false),
 								],
 							),
 						),
